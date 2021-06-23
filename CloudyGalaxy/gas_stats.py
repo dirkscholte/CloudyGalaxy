@@ -10,14 +10,14 @@ class GasStatsCL01:
         '''
         :param logZ: Log metallicity in units of solar metallicity
         :param logU: Log ionization parameter
-        :param age: age of the SSP
-        :param M_star: Stellar mass of the source of ionizing radiation
-        :param nH: Hydrogen density
-        :param lambda_: Wavelength values of the spectrum bins
-        :param spec: Luminosity values of spectrum bins at age of SSP
-        :param spec_0: Luminosity values of spectrum bins of zero-age SSP
-        :param Q_0: Rate of ionizing photons at zero-age
-        :param Q: Current rate of ionizing photons
+        :param age: age of the SSP in years
+        :param M_star: Stellar mass of the source of ionizing radiation in solar masses
+        :param nH: Hydrogen density in cm^-3
+        :param lambda_: Wavelength values of the spectrum bins in Angstrom
+        :param spec: Luminosity values of spectrum bins at age of SSP in erg*s^-1*AA^-1
+        :param spec_0: Luminosity values of spectrum bins of zero-age SSP in erg*s^-1*AA^-1
+        :param Q_0: Rate of ionizing photons at zero-age in s^-1
+        :param Q: Current rate of ionizing photons in s^-1
         :param filling_factor: Fraction of the volume that contains gas
         '''
         self.logZ = logZ
@@ -43,9 +43,9 @@ class GasStatsCL01:
     def calc_Q(self, lambda_, spec):
         '''
         Calculate the rate of ionizing photons
-        :param lambda_: Wavelength values of the spectrum bins
-        :param spec: Luminosity values of spectrum bins
-        :return: Rate of ionizing photons
+        :param lambda_: Wavelength values of the spectrum bins in AA
+        :param spec: Luminosity values of spectrum bins in erg*s^-1*AA^-1
+        :return: Rate of ionizing photons in s^-1
         '''
         h = 6.626e-27  # erg s^-1
         c = 2.9979e18  # ang s^-1
@@ -72,7 +72,7 @@ class GasStatsCL01:
         Calculate the filling factor.
         :param U_0: Zero-age ionization parameter
         :param Q_0: Zero-age rate of ionizing photons
-        :param nH: Hydrogen density
+        :param nH: Hydrogen density in cm^-3
         :return: Filling factor
         '''
         c = 2.9979e10  # cm s^-1
@@ -108,15 +108,15 @@ class GasStatsBy17:
         :param stellar_spectrum: Instance of the StellarSpectrum class with the path to data set.
         :param logZ: Log metallicity in units of solar metallicity
         :param logU: Log ionization parameter
-        :param age: age of the SSP
-        :param nH: Hydrogen density
-        :param r_inner: Inner radius of the gas cloud
-        :param lambda_: Wavelength values of the spectrum bins
-        :param spec: Luminosity values of spectrum bins at age of SSP
-        :param spec_0: Luminosity values of spectrum bins of zero-age SSP
-        :param Q_hat_0: Rate of ionizing photons from a zero-age SSP
-        :param Q_0: Rate of ionizing photons necessary to satisfy conditions
-        :param M_star: Stellar mass of the source of ionizing radiation
+        :param age: age of the SSP in years
+        :param nH: Hydrogen density in cm^-3
+        :param r_inner: Inner radius of the gas cloud in cm
+        :param lambda_: Wavelength values of the spectrum bins in AA
+        :param spec: Luminosity values of spectrum bins at age of SSP in erg*s^-1*AA^-1
+        :param spec_0: Luminosity values of spectrum bins of zero-age SSP in erg*s^-1*AA^-1
+        :param Q_hat_0: Rate of ionizing photons from a zero-age SSP in s^-1
+        :param Q_0: Rate of ionizing photons necessary to satisfy conditions in s^-1
+        :param M_star: Stellar mass of the source of ionizing radiation in solar masses
         :param filling_factor: Fraction of the volume that contains gas
         '''
         self.stellar_spectrum = stellar_spectrum
@@ -144,8 +144,8 @@ class GasStatsBy17:
     def calc_Q_hat(self, lambda_, spec):
         '''
         Function to calculate the number of ionizing photons
-        :param lambda_: Wavelength values of the spectrum bins
-        :param spec: Luminosity values of spectrum bins
+        :param lambda_: Wavelength values of the spectrum bins in AA
+        :param spec: Luminosity values of spectrum bins in erg*s^-1*AA^-1
         :return: Rate of ionizing photons
         '''
         h = 6.626e-27  # erg s^-1
@@ -168,7 +168,7 @@ class GasStatsBy17:
     def calc_M_star(self):
         '''
         Calculate the stellar mass necessary to match Q_hat_0 and Q_0
-        :return: Stellar mass
+        :return: Stellar mass in solar masses
         '''
         self.Q_hat_0 = self.calc_Q_hat(self.lambda_, self.spec_0)
         self.Q_0 = self.calc_Q_0()

@@ -146,7 +146,7 @@ class ElementalAbundances:
 
     def calc_dust_to_metal(self):
         '''
-        Calculates the dust-to-metal ('aka dust-to-heavy element') ratio.
+        Calculates the dust-to-metal ('aka dust-to-heavy element') ratio (xi).
         :return: Nothing, updates internal dust_to_metal parameter
         '''
         numerator = 0.
@@ -169,7 +169,7 @@ class ElementalAbundances:
 
 def convert_xi_to_F(logZ):
     '''
-    Function to convert xi values to F to be inputted.
+    Function to convert xi (dust-to-metal ratio) values to F to be inputted.
     :param logZ: Log metallicity as a function of solar metallicity.
     :return: Interpolated function to convert xi to F for the inputted metallicity.
     '''

@@ -20,7 +20,7 @@ class StellarSpectrum:
         '''
         Create string of text to be pasted into the Cloudy input file.
         :param logZ: Log metallicity in units of solar metallicity.
-        :param age: Age of the SSP
+        :param age: Age of the SSP in years
         :return: String to be pasted in Cloudy input file.
         '''
         return 'table star "{0}" age={1:.2e} logz={2:.2e}'.format(self.filename, age, logZ)
@@ -28,9 +28,9 @@ class StellarSpectrum:
     def load_spectrum(self, age, logZ, f_lambda_in=True):
         '''
         Loading of spectra from file and writing them to numpy arrays
-        :param age: Age of SSP
+        :param age: Age of SSP in years
         :param logZ: Log metallicity in units of solar metallicity
-        :param f_lambda_in: If True: Luminosity on file in units of wavelength. Else: Luminosity on file in units of frequency.
+        :param f_lambda_in: If True: Luminosity on file in units of wavelength (erg*s^-1*AA^-1). Else: Luminosity on file in units of frequency (erg*s^-1*Hz^-1).
         :return: Two numpy arrays of equal length. One with the wavelengths of the spectrum bins and one with the Luminosities.
         '''
         f = open(self.data_path + self.filename, "r")
@@ -101,7 +101,7 @@ def make_input_file(output_dir, model_name, logZ, logU, xi, emission_line_list, 
     :param stellar_spectrum: Instance of the Stellar Spectrum class with data paths defined.
     :param gas_stats: Instance of the GasStats class.
     :param elemental_abundances: Instance of the ElementalAbundances class.
-    :param age: Age of the SSP
+    :param age: Age of the SSP in years
     :return: Nothing, writes to output_dir+model_name+'.in'
     '''
     full_model_name = '{0}_{1:.3e}_{2:.3e}_{3:.3e}'.format(model_name, logZ, logU, xi)
@@ -135,7 +135,7 @@ def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, taus, Fs
     :param logUs: Log ionization parameter.
     :param xis: Dust-to-metal ratio
     :param taus: Optical depth at 5500 Angstrom
-    :param calc_F: Function to calculate the depletion strength parameter
+    :param calc_F: Function to calculate the depletion strength factor
     :return: 4 '.npy' files containing the emission line labels, wavelengths, parameter settings, line luminosity.
     '''
     nlogZs = len(logZs)
