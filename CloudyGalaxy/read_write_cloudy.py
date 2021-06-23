@@ -26,7 +26,10 @@ class StellarSpectrum:
         :param age: Age of the SSP in years
         :return: String to be pasted in Cloudy input file.
         '''
-        return 'table star "{0}" age={1:.2e} logz={2:.2e}'.format(self.filename, age, logZ)
+        if logZ>0.5:
+            return 'table star "{0}" age={1:.2e} logz={2:.2e}'.format(self.filename, age, 0.5)
+        else:
+            return 'table star "{0}" age={1:.2e} logz={2:.2e}'.format(self.filename, age, logZ)
 
     def load_spectrum(self, age, logZ, f_lambda_in=True):
         '''
