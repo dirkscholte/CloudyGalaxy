@@ -49,7 +49,7 @@ class GasStatsCL01:
         :param spec: Luminosity values of spectrum bins in erg*s^-1*AA^-1
         :return: Rate of ionizing photons in s^-1
         '''
-        h = const.h.to(u.erg * u.s**-1).value # erg * s^-1
+        h = const.h.to(u.erg * u.s).value # erg * s^-1
         c = const.c.to(cds.AA * u.s**-1).value # AA * s^-1
 
         mask = lambda_ <= 912.
@@ -150,7 +150,7 @@ class GasStatsBy17:
         :param spec: Luminosity values of spectrum bins in erg*s^-1*AA^-1
         :return: Rate of ionizing photons
         '''
-        h = const.h.to(u.erg * u.s ** -1).value  # erg * s^-1
+        h = const.h.to(u.erg * u.s).value  # erg * s^-1
         c = const.c.to(cds.AA * u.s ** -1).value  # AA * s^-1
 
         mask = lambda_ <= 912.
