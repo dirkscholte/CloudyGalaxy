@@ -3,3 +3,5 @@
 /examples/output_data/*
 /environment_variables
 *checkpoint.ipynb
+/examples/*.npy
+
