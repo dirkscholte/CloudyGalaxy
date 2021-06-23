@@ -2,6 +2,7 @@ import math
 import numpy as np
 from astropy import constants as const
 from astropy import units as u
+from astropy.units import cds
 import pyCloudy as pc
 from dust_attenuation import transmission_function
 from surface_density import calc_log_dust, calc_log_gas
@@ -76,7 +77,7 @@ class StellarSpectrum:
         else:
             lambda_ = x_vals
             f_nu = y_vals * conv2
-            c = (const.c * u.cds.AA * u.s ** -1).value  # AA * s^-1
+            c = (const.c * cds.AA * u.s ** -1).value  # AA * s^-1
             f_lambda = f_nu * c / lambda_ ** 2  # erg s^-1 AA^-1
             return lambda_, f_lambda
 
