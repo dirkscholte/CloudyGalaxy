@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.integrate import simps
-
+from astropy import constants as const
+from astropy import units as u
 
 class GasStatsCL01:
     '''
@@ -47,8 +48,8 @@ class GasStatsCL01:
         :param spec: Luminosity values of spectrum bins in erg*s^-1*AA^-1
         :return: Rate of ionizing photons in s^-1
         '''
-        h = 6.626e-27  # erg s^-1
-        c = 2.9979e18  # ang s^-1
+        h = (const.h * u.erg * u.s**-1).value # erg * s^-1
+        c = (const.c * u.cds.AA * u.s**-1).value # AA * s^-1
 
         mask = lambda_ <= 912.
         integral = simps(lambda_[mask] * spec[mask], lambda_[mask])
@@ -75,8 +76,8 @@ class GasStatsCL01:
         :param nH: Hydrogen density in cm^-3
         :return: Filling factor
         '''
-        c = 2.9979e10  # cm s^-1
-        alpha_B = 2.59e-13  # cm^3 s^-1
+        c = (const.c * u.cm * u.s**-1).value # cm * s^-1
+        alpha_B = 2.59e-13  # cm^3 s^-1  Alpha Case B (not in astropy units)
         return ((4 / 3) * np.pi * c ** 3 / alpha_B ** 2 * U_0 ** 3 / (Q_0 * nH)) ** 0.5
 
     def filling_factor_spectrum(self):
@@ -148,8 +149,8 @@ class GasStatsBy17:
         :param spec: Luminosity values of spectrum bins in erg*s^-1*AA^-1
         :return: Rate of ionizing photons
         '''
-        h = 6.626e-27  # erg s^-1
-        c = 2.9979e18  # ang s^-1
+        h = (const.h * u.erg * u.s ** -1).value  # erg * s^-1
+        c = (const.c * u.cds.AA * u.s ** -1).value  # AA * s^-1
 
         mask = lambda_ <= 912.
         integrand = lambda_[mask] * spec[mask]
@@ -161,7 +162,7 @@ class GasStatsBy17:
         Calculate rate of ionizing photons necessary to satisfy conditions at zero-age.
         :return: Rate of ionizing photons
         '''
-        c = 2.9979e10  # cm s^-1
+        c = (const.c * u.cm * u.s**-1).value # cm * s^-1
         self.Q_0 = 10 ** self.logU * 4 * np.pi * self.r_inner ** 2 * self.nH * c
         return self.Q_0
 
