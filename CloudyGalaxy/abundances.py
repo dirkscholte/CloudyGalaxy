@@ -25,7 +25,16 @@ class ElementalAbundances:
                            Ar=-0.00,
                            Ca=-5.04,
                            Fe=-2.62,
-                           Ni=-4.00
+                           Ni=-4.00,
+                           F=0.0,
+                           P=0.0,
+                           K=0.0,
+                           Cr=0.0,
+                           Ti=0.0,
+                           Mn=0.0,
+                           Co=0.0,
+                           Cu=0.0,
+                           Zn=0.0
                            )
         self.coef_B = dict(C=-0.30,    #coefficient B for depletion fractions as in Byler et al. 2017
                            N=-0.05,
@@ -40,7 +49,16 @@ class ElementalAbundances:
                            Ar=-0.00,
                            Ca=-2.52,
                            Fe=-1.31,
-                           Ni=-2.00
+                           Ni=-2.00,
+                           F=0.0,
+                           P=0.0,
+                           K=0.0,
+                           Cr=0.0,
+                           Ti=0.0,
+                           Mn=0.0,
+                           Co=0.0,
+                           Cu=0.0,
+                           Zn=0.0
                            )
         self.coef_z = dict(C=0.5,    #coefficient z for depletion fractions as in Byler et al. 2017
                            N=0.5,
@@ -55,7 +73,16 @@ class ElementalAbundances:
                            Ar=0.5,
                            Ca=0.5,
                            Fe=0.5,
-                           Ni=0.5
+                           Ni=0.5,
+                           F=0.5,
+                           P=0.5,
+                           K=0.5,
+                           Cr=0.5,
+                           Ti=0.5,
+                           Mn=0.5,
+                           Co=0.5,
+                           Cu=0.5,
+                           Zn=0.5
                            )
         self.solar = dict(He=10.93,    #Solar abundances as in Asplund et al. 2009
                           C=8.43,
@@ -71,7 +98,16 @@ class ElementalAbundances:
                           Ar=6.40,
                           Ca=6.34,
                           Fe=7.50,
-                          Ni=6.22
+                          Ni=6.22,
+                          F=-7.44,
+                          P=-6.59,
+                          K=-6.97,
+                          Cr=-6.36,
+                          Ti=-7.05,
+                          Mn=-6.57,
+                          Co=-7.01,
+                          Cu=-7.81,
+                          Zn=-7.44
                           )
         self.mass = dict(H=1.0079,    #Mass of elements as from https://www.lenntech.com/periodic/mass/atomic-mass.htm
                          He=4.0026,
@@ -88,7 +124,16 @@ class ElementalAbundances:
                          Ar=39.948,
                          Ca=40.078,
                          Fe=55.845,
-                         Ni=58.6934
+                         Ni=58.6934,
+                         F=18.9984,
+                         P=30.9738,
+                         K=39.0983,
+                         Cr=51.9961,
+                         Ti=47.867,
+                         Mn=54.938,
+                         Co=58.9332,
+                         Cu=63.546,
+                         Zn=65.39
                          )
 
     def set_depletion(self):
