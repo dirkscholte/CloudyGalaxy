@@ -77,7 +77,7 @@ class StellarSpectrum:
         else:
             lambda_ = x_vals
             f_nu = y_vals * conv2
-            c = (const.c * cds.AA * u.s ** -1).value  # AA * s^-1
+            c = const.c.to(cds.AA * u.s ** -1).value  # AA * s^-1
             f_lambda = f_nu * c / lambda_ ** 2  # erg s^-1 AA^-1
             return lambda_, f_lambda
 
