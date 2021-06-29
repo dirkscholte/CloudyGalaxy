@@ -158,32 +158,24 @@ class GasStatsBy17:
         integral = simps(lambda_[mask] * spec[mask], lambda_[mask])
         return 1 / (h * c) * integral
 
-    def calc_Q_0(self):
+    def calc_Q(self):
         '''
-        Calculate rate of ionizing photons necessary to satisfy conditions at zero-age.
-        :return: Rate of ionizing photons
+        Calculate the rate of ionizing photons at the current age.
+        :return: Rate of ionizing photons at current age.
         '''
         c = const.c.to(u.cm * u.s**-1).value # cm * s^-1
-        self.Q_0 = 10 ** self.logU * 4 * np.pi * self.r_inner ** 2 * self.nH * c
-        return self.Q_0
+        self.Q = 10 ** self.logU * 4 * np.pi * self.r_inner ** 2 * self.nH * c
+        return self.Q
 
     def calc_M_star(self):
         '''
         Calculate the stellar mass necessary to match Q_hat_0 and Q_0
         :return: Stellar mass in solar masses
         '''
-        self.Q_hat_0 = self.calc_Q_hat(self.lambda_, self.spec_0)
-        self.Q_0 = self.calc_Q_0()
-        self.M_star = self.Q_0 / self.Q_hat_0
+        self.Q_hat = self.calc_Q_hat(self.lambda_, self.spec)
+        self.Q = self.calc_Q()
+        self.M_star = self.Q / self.Q_hat
         return self.M_star
-
-    def calc_Q(self):
-        '''
-        Calculate the rate of ionizing photons at the current age.
-        :return: Rate of ionizing photons at current age.
-        '''
-        self.Q = self.M_star * self.calc_Q_hat(self.lambda_, self.spec)
-        return self.Q
 
     def calc_all_parameters(self):
         '''
@@ -191,6 +183,5 @@ class GasStatsBy17:
         :return: Nothing, update internal parameters
         '''
         self.set_stellar_spectrum()
-        self.calc_Q_0()
-        self.calc_M_star()
         self.calc_Q()
+        self.calc_M_star()
