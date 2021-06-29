@@ -11,13 +11,14 @@ class StellarSpectrum:
     '''
     Specifies location of stellar spectrum (SSP) files, formats input text for Cloudy and loads spectra.
     '''
-    def __init__(self, data_path, filename):
+    def __init__(self, data_path, filename, f_lambda_in=True):
         '''
         :param data_path: Path to stellar spectrum (SSP) files
         :param filename: Filename of stellar spectrum file
         '''
         self.data_path = data_path
         self.filename = filename
+        self.f_lambda_in=f_lambda_in
 
     def star_table_string(self, logZ, age=1e8):
         '''
@@ -31,7 +32,7 @@ class StellarSpectrum:
         else:
             return 'table star "{0}" age={1:.2e} logz={2:.2e}'.format(self.filename, age, logZ)
 
-    def load_spectrum(self, age, logZ, f_lambda_in=True):
+    def load_spectrum(self, age, logZ):
         '''
         Loading of spectra from file and writing them to numpy arrays
         :param age: Age of SSP in years
@@ -73,7 +74,7 @@ class StellarSpectrum:
 
         f.close()
 
-        if f_lambda_in:
+        if self.f_lambda_in:
             lambda_ = x_vals
             f_lambda = y_vals * conv2
             return lambda_, f_lambda
@@ -130,9 +131,7 @@ def make_input_file(output_dir, model_name, logZ, logU, xi, emission_line_list, 
     c_input.set_stop(['temperature 100.0', 'efrac -1.00']) # stop criteria
     options = ('print line precision 6', 'COSMIC RAY BACKGROUND')
     c_input.set_other(options)
-    save_string = ('print last', 'Save lines, intensity, column, emergent, ".lines"')
-    c_input.set_other(save_string)
-    c_input.print_input(to_file = True, verbose = True)
+    c_input.print_input(to_file = True, verbose = False)
 
 def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, taus, Fs):
     '''
