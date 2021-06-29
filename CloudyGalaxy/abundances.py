@@ -84,21 +84,21 @@ class ElementalAbundances:
                            Cu=0.5,
                            Zn=0.5
                            )
-        self.solar = dict(He=10.93,    #Solar abundances as in Asplund et al. 2009
-                          C=8.43,
-                          N=7.40,
-                          O=8.69,
-                          Ne=7.93,
-                          Na=6.20,
-                          Mg=7.60,
-                          Al=6.45,
-                          Si=7.51,
-                          S=7.12,
-                          Cl=5.50,
-                          Ar=6.40,
-                          Ca=6.34,
-                          Fe=7.50,
-                          Ni=6.22,
+        self.solar = dict(He=-1.01,
+                          C=-3.57,
+                          N=-4.60,
+                          O=-3.31,
+                          Ne=-4.07,
+                          Na=-5.75,
+                          Mg=-4.40,
+                          Al=-5.55,
+                          Si=-4.49,
+                          S=-4.86,
+                          Cl=-6.63,
+                          Ar=-5.60,
+                          Ca=-5.66,
+                          Fe=-4.50,
+                          Ni=-5.78,
                           F=-7.44,
                           P=-6.59,
                           K=-6.97,
@@ -163,7 +163,7 @@ class ElementalAbundances:
                             -5.14, -4.60, -4.40, -4.04, -3.67, -3.17])
             car = np.array([-5.58, -5.44, -5.20, -4.76, -4.48,
                             -4.11, -3.57, -3.37, -3.01, -2.64, -2.14])
-            O = self.solar['O'] - 12.0 + self.logZ
+            O = self.solar['O'] + self.logZ
             C = float(InterpUS(oxy, car, k=1)(O + 12.0))
             N = float(InterpUS(oxy, nit, k=1)(O + 12.0))
             return C, N, O
@@ -175,7 +175,7 @@ class ElementalAbundances:
         undepl_abund['O'] = calc_CNO(self.logZ)[2]
         for key in undepl_abund.keys():
             if key != 'He' and key != 'C' and key != 'N' and key != 'O':
-                undepl_abund[key] = self.solar[key] - 12.0 + self.logZ
+                undepl_abund[key] = self.solar[key] + self.logZ
         self.undepl_abund = undepl_abund
         return
 
@@ -198,8 +198,8 @@ class ElementalAbundances:
         denominator = 0.
         for key in self.depl:
             if key != 'He' and key != 'H':
-                numerator += self.mass[key] * (1 - 10 ** self.depl[key]) * 10 ** (self.undepl_abund[key] - 12.0)
-                denominator += self.mass[key] * 10 ** (self.undepl_abund[key] - 12.0)
+                numerator += self.mass[key] * (1 - 10 ** self.depl[key]) * 10 ** (self.undepl_abund[key])
+                denominator += self.mass[key] * 10 ** (self.undepl_abund[key])
         self.dust_to_metal = numerator / denominator
 
     def calc_all_parameters(self):
