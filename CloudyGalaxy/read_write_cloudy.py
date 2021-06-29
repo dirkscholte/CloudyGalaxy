@@ -119,18 +119,20 @@ def make_input_file(output_dir, model_name, logZ, logU, xi, emission_line_list, 
                      lumi_value= np.log10(gas_stats.Q)
                     )
     c_input.set_radius(np.log10(gas_stats.r_inner)) # Set inner radius of gas cloud
+    c_input.set_abund(predef='GASS10')
     c_input.set_abund(ab_dict= elemental_abundances.abund,
                       nograins = True
                      ) # Set abundances
-    c_input.set_cste_density(dens=np.log10(gas_stats.nH)) # set constant hydrogen density
+    c_input.set_cste_density(dens=np.log10(gas_stats.nH), ff=0.05) # set constant hydrogen density
     c_input.set_emis_tab(emission_line_list) # set emission line table
     c_input.set_sphere(True) #Spherical geometry
     c_input.set_iterate(to_convergence=True) # iterate to convergence
     c_input.set_stop(['temperature 100.0', 'efrac -1.00']) # stop criteria
     options = ('print line precision 6', 'COSMIC RAY BACKGROUND')
     c_input.set_other(options)
-
-    c_input.print_input(to_file = True, verbose = False)
+    save_string = ('print last', 'Save lines, intensity, column, emergent, ".lines"')
+    c_input.set_other(save_string)
+    c_input.print_input(to_file = True, verbose = True)
 
 def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, taus, Fs):
     '''
@@ -150,7 +152,7 @@ def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, taus, Fs
     ntaus  = len(taus)
 
     emline_param_cube = np.zeros((nlogZs,nlogUs,nxis,ntaus, 7))
-    emline_luminosity_cube = np.zeros((nlogZs,nlogUs,nxis,ntaus, 127))
+    emline_luminosity_cube = np.zeros((nlogZs,nlogUs,nxis,ntaus, 146))
 
     for i in range(nlogZs):
         for j in range(nlogUs):
