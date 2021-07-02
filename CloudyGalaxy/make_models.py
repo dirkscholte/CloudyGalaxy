@@ -1,11 +1,9 @@
 import numpy as np
 import pyCloudy as pc
-from gas_stats import GasStatsBy17 as GasStats
-from abundances import ElementalAbundances, convert_xi_to_F
-from dust_attenuation import transmission_function
-from read_write_cloudy import StellarSpectrum, format_emission_table, make_input_file, make_emission_line_files
-
-import matplotlib.pyplot as plt
+from CloudyGalaxy.gas_stats import GasStatsBy17 as GasStats
+from CloudyGalaxy.abundances import ElementalAbundances, convert_xi_to_F
+from CloudyGalaxy.dust_attenuation import transmission_function
+from CloudyGalaxy.read_write_cloudy import StellarSpectrum, format_emission_table, make_input_file, make_emission_line_files
 
 n_proc              = 6
 

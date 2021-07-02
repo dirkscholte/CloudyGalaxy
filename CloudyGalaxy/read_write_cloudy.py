@@ -4,8 +4,8 @@ from astropy import constants as const
 from astropy import units as u
 from astropy.units import cds
 import pyCloudy as pc
-from dust_attenuation import transmission_function
-from surface_density import calc_log_dust, calc_log_gas
+from CloudyGalaxy.dust_attenuation import transmission_function
+from CloudyGalaxy.surface_density import calc_log_dust, calc_log_gas
 
 class StellarSpectrum:
     '''
