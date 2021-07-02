@@ -5,3 +5,6 @@
 *checkpoint.ipynb
 /examples/*.npy
 /testing/*
+*.egg-info
+build
+dist
