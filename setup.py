@@ -6,5 +6,6 @@ setuptools.setup(
     author="Dirk Scholte",
     author_email="dirk.scholte.20@ucl.ac.uk",
     description="Python package to generate photoionization models to produce galaxy emission lines.",
-    packages=["CloudyGalaxy", "numpy", "scipy", "pyCloudy", "math", "astropy"]
+    packages=["CloudyGalaxy"],
+    install_requires=["numpy", "scipy", "pyCloudy", "astropy"]
 )
