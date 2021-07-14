@@ -8,3 +8,4 @@
 *.egg-info
 build
 dist
+/models/test_model_high_res/*
