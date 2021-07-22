@@ -150,7 +150,8 @@ def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, logtaus,
     nxis   = len(xis)
     nlogtaus  = len(logtaus)
 
-    emline_param_cube = np.zeros((nlogZs,nlogUs,nxis,nlogtaus, 7))
+    emline_param_cube = np.zeros((nlogZs,nlogUs,nxis,nlogtaus, 4))
+    emline_derived_param_cube = np.zeros((nlogZs,nlogUs,nxis,nlogtaus, 4))
     emline_luminosity_cube = np.zeros((nlogZs,nlogUs,nxis,nlogtaus, 146))
 
     for i in range(nlogZs):
@@ -172,7 +173,8 @@ def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, logtaus,
                     lambda_emission_lines = [float(label[5:-1])*0.01 for label in model.emis_labels] #Ang
                     emission_lines = [model.get_emis_vol(ref=label) for label in model.emis_labels] #erg/s
                     attenuated_emission_lines = emission_lines * transmission_function(lambda_emission_lines, logtau)
-                    emline_param_cube[i,j,k,l] = np.array([logZ, logU, xi, logtau, F, calc_log_dust(logtau), calc_log_gas(logZ, xi, logtau)])
+                    emline_param_cube[i,j,k,l] = np.array([logZ, logU, xi, logtau])
+                    emline_derived_param_cube[i,j,k,l] = np.array([F, model.abund['O'], calc_log_dust(logtau), calc_log_gas(logZ, xi, logtau)])
                     emline_luminosity_cube[i,j,k,l] = attenuated_emission_lines
                     if i==0 and j==0 and k==0 and l==0:
                         emline_labels = model.emis_labels
@@ -181,4 +183,5 @@ def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, logtaus,
     np.save(model_name + '_emission_line_labels.npy', emline_labels)
     np.save(model_name + '_emission_line_wavelengths.npy', emline_lambda)
     np.save(model_name + '_parameters_file.npy', emline_param_cube)
+    np.save(model_name + '_derived_parameters_file.npy', emline_derived_param_cube)
     np.save(model_name + '_emission_line_luminosity_file.npy', emline_luminosity_cube)
