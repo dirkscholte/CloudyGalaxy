@@ -133,7 +133,7 @@ def make_input_file(output_dir, model_name, logZ, logU, xi, emission_line_list, 
     c_input.set_other(options)
     c_input.print_input(to_file = True, verbose = False)
 
-def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, taus, Fs):
+def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, logtaus, Fs):
     '''
     Reads Cloudy output files and extracts emission line fluxes. Writes to files along with line labels, line wavelengths and parameter values.
     :param output_dir: Output directory of the data files.
@@ -141,17 +141,17 @@ def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, taus, Fs
     :param logZs: Log metallicity in units of solar metallicity.
     :param logUs: Log ionization parameter.
     :param xis: Dust-to-metal ratio
-    :param taus: Optical depth at 5500 Angstrom
+    :param logtaus: Log optical depth at 5500 Angstrom
     :param calc_F: Function to calculate the depletion strength factor
     :return: 4 '.npy' files containing the emission line labels, wavelengths, parameter settings, line luminosity.
     '''
     nlogZs = len(logZs)
     nlogUs = len(logUs)
     nxis   = len(xis)
-    ntaus  = len(taus)
+    nlogtaus  = len(logtaus)
 
-    emline_param_cube = np.zeros((nlogZs,nlogUs,nxis,ntaus, 7))
-    emline_luminosity_cube = np.zeros((nlogZs,nlogUs,nxis,ntaus, 146))
+    emline_param_cube = np.zeros((nlogZs,nlogUs,nxis,nlogtaus, 7))
+    emline_luminosity_cube = np.zeros((nlogZs,nlogUs,nxis,nlogtaus, 146))
 
     for i in range(nlogZs):
         for j in range(nlogUs):
@@ -165,14 +165,14 @@ def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, taus, Fs
                 models = pc.load_models('{0}{1}'.format(output_dir,full_model_name), read_grains = False)
                 print('{} models found!'.format(len(models)))
                 model = models[0]
-                for l in range(ntaus):
-                    tau  = taus[l]
-                    print('PROCESSING: logZ = {0:06.4f}, logU = {1:06.4f}, xi = {2:06.4f}, tau = {3:06.4f}.'.format(logZ, logU, xi, tau))
+                for l in range(nlogtaus):
+                    logtau  = logtaus[l]
+                    print('PROCESSING: logZ = {0:06.4f}, logU = {1:06.4f}, xi = {2:06.4f}, logtau = {3:06.4f}.'.format(logZ, logU, xi, logtau))
 
                     lambda_emission_lines = [float(label[5:-1])*0.01 for label in model.emis_labels] #Ang
                     emission_lines = [model.get_emis_vol(ref=label) for label in model.emis_labels] #erg/s
-                    attenuated_emission_lines = emission_lines * transmission_function(lambda_emission_lines, tau)
-                    emline_param_cube[i,j,k,l] = np.array([logZ, logU, xi, tau, F, calc_log_dust(tau), calc_log_gas(logZ, xi, tau)])
+                    attenuated_emission_lines = emission_lines * transmission_function(lambda_emission_lines, logtau)
+                    emline_param_cube[i,j,k,l] = np.array([logZ, logU, xi, logtau, F, calc_log_dust(logtau), calc_log_gas(logZ, xi, logtau)])
                     emline_luminosity_cube[i,j,k,l] = attenuated_emission_lines
                     if i==0 and j==0 and k==0 and l==0:
                         emline_labels = model.emis_labels

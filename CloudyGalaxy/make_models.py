@@ -16,12 +16,12 @@ emission_line_list  = format_emission_table('./input_data/cloudyLines_2021-03-29
 nlogZs = 6
 nlogUs = 2
 nxis   = 2
-ntaus  = 4
+nlogtaus  = 4
 
 logZs = np.linspace(-1.0, 0.5, nlogZs)
 logUs = np.linspace(-3.5, -1.5, nlogUs)
 xis   = np.linspace(0.1, 0.6, nxis)
-taus  = np.linspace(0.01, 4.0, ntaus)
+logtaus  = np.linspace(-2.0, 0.6, nlogtaus)
 Fs    = np.ones((nlogZs,nxis))*np.nan
 
 pc.print_make_file(dir_ = output_dir)
@@ -44,4 +44,4 @@ for i in range(nlogZs):
 
 pc.run_cloudy(dir_ = output_dir, n_proc = n_proc, model_name = model_name, use_make = True)
 
-make_emission_line_files(output_dir, model_name, logZs, logUs, xis, taus, Fs)
+make_emission_line_files(output_dir, model_name, logZs, logUs, xis, logtaus, Fs)
