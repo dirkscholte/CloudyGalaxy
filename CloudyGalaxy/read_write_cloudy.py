@@ -133,7 +133,7 @@ def make_input_file(output_dir, model_name, logZ, logU, xi, emission_line_list, 
     c_input.set_other(options)
     c_input.print_input(to_file = True, verbose = False)
 
-def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, logtaus, Fs):
+def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, logtaus, Fs, n_attenuation=-1.3):
     '''
     Reads Cloudy output files and extracts emission line fluxes. Writes to files along with line labels, line wavelengths and parameter values.
     :param output_dir: Output directory of the data files.
@@ -172,7 +172,7 @@ def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, logtaus,
 
                     lambda_emission_lines = [float(label[5:-1])*0.01 for label in model.emis_labels] #Ang
                     emission_lines = [model.get_emis_vol(ref=label) for label in model.emis_labels] #erg/s
-                    attenuated_emission_lines = emission_lines * transmission_function(lambda_emission_lines, logtau)
+                    attenuated_emission_lines = emission_lines * transmission_function(lambda_emission_lines, logtau, n=n_attenuation)
                     emline_param_cube[i,j,k,l] = np.array([logZ, logU, xi, logtau])
                     emline_derived_param_cube[i,j,k,l] = np.array([F, model.abund['O'], calc_log_dust(logtau), calc_log_gas(logZ, xi, logtau)])
                     emline_luminosity_cube[i,j,k,l] = attenuated_emission_lines
