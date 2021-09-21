@@ -185,3 +185,52 @@ def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, logtaus,
     np.save(model_name + '_parameters_file.npy', emline_param_cube)
     np.save(model_name + '_derived_parameters_file.npy', emline_derived_param_cube)
     np.save(model_name + '_emission_line_luminosity_file.npy', emline_luminosity_cube)
+
+
+def make_unattenuated_emission_line_files(output_dir, model_name, logZs, logUs, xis, Fs):
+    '''
+    Reads Cloudy output files and extracts emission line fluxes. Writes to files along with line labels, line wavelengths and parameter values.
+    :param output_dir: Output directory of the data files.
+    :param model_name: Name of the model
+    :param logZs: Log metallicity in units of solar metallicity.
+    :param logUs: Log ionization parameter.
+    :param xis: Dust-to-metal ratio
+    :param logtaus: Log optical depth at 5500 Angstrom
+    :param calc_F: Function to calculate the depletion strength factor
+    :return: 4 '.npy' files containing the emission line labels, wavelengths, parameter settings, line luminosity.
+    '''
+    nlogZs = len(logZs)
+    nlogUs = len(logUs)
+    nxis   = len(xis)
+
+    emline_param_cube = np.zeros((nlogZs,nlogUs,nxis, 3))
+    emline_derived_param_cube = np.zeros((nlogZs,nlogUs,nxis, 2))
+    emline_luminosity_cube = np.zeros((nlogZs,nlogUs,nxis, 146))
+
+    for i in range(nlogZs):
+        for j in range(nlogUs):
+            for k in range(nxis):
+                logZ = logZs[i]
+                logU = logUs[j]
+                xi   = xis[k]
+                F    = Fs[i,k]
+                full_model_name = '{0}_{1:.3e}_{2:.3e}_{3:.3e}'.format(model_name, logZ, logU, xi)
+                print('{0}{1}'.format(output_dir,full_model_name))
+                models = pc.load_models('{0}{1}'.format(output_dir,full_model_name), read_grains = False)
+                print('{} models found!'.format(len(models)))
+                model = models[0]
+                print('PROCESSING: logZ = {0:06.4f}, logU = {1:06.4f}, xi = {2:06.4f}.'.format(logZ, logU, xi))
+
+                emission_lines = [model.get_emis_vol(ref=label) for label in model.emis_labels] #erg/s
+                emline_param_cube[i,j,k,l] = np.array([logZ, logU, xi])
+                emline_derived_param_cube[i,j,k,l] = np.array([F, model.abund['O']])
+                emline_luminosity_cube[i,j,k,l] = emission_lines
+                if i==0 and j==0 and k==0 and l==0:
+                    emline_labels = model.emis_labels
+                    emline_lambda = [float(label[5:-1])*0.01 for label in model.emis_labels] #Ang
+
+    np.save(model_name + '_unattenuated_emission_line_labels.npy', emline_labels)
+    np.save(model_name + '_unattenuated_emission_line_wavelengths.npy', emline_lambda)
+    np.save(model_name + '_unattenuated_parameters_file.npy', emline_param_cube)
+    np.save(model_name + '_unattenuated_derived_parameters_file.npy', emline_derived_param_cube)
+    np.save(model_name + '_unattenuated_emission_line_luminosity_file.npy', emline_luminosity_cube)
