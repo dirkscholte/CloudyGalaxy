@@ -222,10 +222,10 @@ def make_unattenuated_emission_line_files(output_dir, model_name, logZs, logUs, 
                 print('PROCESSING: logZ = {0:06.4f}, logU = {1:06.4f}, xi = {2:06.4f}.'.format(logZ, logU, xi))
 
                 emission_lines = [model.get_emis_vol(ref=label) for label in model.emis_labels] #erg/s
-                emline_param_cube[i,j,k,l] = np.array([logZ, logU, xi])
-                emline_derived_param_cube[i,j,k,l] = np.array([F, model.abund['O']])
-                emline_luminosity_cube[i,j,k,l] = emission_lines
-                if i==0 and j==0 and k==0 and l==0:
+                emline_param_cube[i,j,k] = np.array([logZ, logU, xi])
+                emline_derived_param_cube[i,j,k] = np.array([F, model.abund['O']])
+                emline_luminosity_cube[i,j,k] = emission_lines
+                if i==0 and j==0 and k==0:
                     emline_labels = model.emis_labels
                     emline_lambda = [float(label[5:-1])*0.01 for label in model.emis_labels] #Ang
 
