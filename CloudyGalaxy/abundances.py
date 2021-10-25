@@ -183,7 +183,7 @@ def set_coef_A(scaling_method):
                       Cu=0.0,
                       Zn=0.0
                       )
-    elif scaling_method='jenkins09':
+    elif scaling_method=='jenkins09':
         coef_A = dict(C=-0.60, #Not adopted from Jenkins09
                       N=-0.10, #Not adopted from Jenkins09
                       O=-0.14, #Not adopted from Jenkins09
@@ -238,7 +238,7 @@ def set_coef_B(scaling_method):
                       Cu=0.0,
                       Zn=0.0
                       )
-    elif scaling_method='jenkins09':
+    elif scaling_method=='jenkins09':
         coef_B = dict(C=-0.30, #Not adopted from Jenkins09
                       N=-0.05, #Not adopted from Jenkins09
                       O=-0.07, #Not adopted from Jenkins09
@@ -269,55 +269,55 @@ def set_coef_B(scaling_method):
 
 def set_coef_z(scaling_method):
     if scaling_method=='dopita13_scaled':
-        self.coef_z = dict(C=0.5,
-                           N=0.5,
-                           O=0.5,
-                           Ne=0.5,
-                           Na=0.5,
-                           Mg=0.5,
-                           Al=0.5,
-                           Si=0.5,
-                           S=0.5,
-                           Cl=0.5,
-                           Ar=0.5,
-                           Ca=0.5,
-                           Fe=0.5,
-                           Ni=0.5,
-                           F=0.5,
-                           P=0.5,
-                           K=0.5,
-                           Cr=0.5,
-                           Ti=0.5,
-                           Mn=0.5,
-                           Co=0.5,
-                           Cu=0.5,
-                           Zn=0.5
-                           )
-    elif scaling_method='jenkins09':
-        self.coef_z = dict(C=0.5, #Not adopted from Jenkins09
-                           N=0.5, #Not adopted from Jenkins09
-                           O=0.5, #Not adopted from Jenkins09
-                           Ne=0.5, #Not in Jenkins09
-                           Na=0.5, #Not in Jenkins09
-                           Mg=0.531,
-                           Al=0.5, #Not in Jenkins
-                           Si=0.305,
-                           S=0.290, #Synthetic Jenkins09
-                           Cl=0.609,
-                           Ar=0.5, #Not in Jenkins09
-                           Ca=0.5, #Not in Jenkins09
-                           Fe=0.437,
-                           Ni=0.599,
-                           F=0.5,
-                           P=0.5,
-                           K=0.5,
-                           Cr=0.5,
-                           Ti=0.5,
-                           Mn=0.5,
-                           Co=0.5,
-                           Cu=0.5,
-                           Zn=0.5
-                           )
+        coef_z = dict(C=0.5,
+                      N=0.5,
+                      O=0.5,
+                      Ne=0.5,
+                      Na=0.5,
+                      Mg=0.5,
+                      Al=0.5,
+                      Si=0.5,
+                      S=0.5,
+                      Cl=0.5,
+                      Ar=0.5,
+                      Ca=0.5,
+                      Fe=0.5,
+                      Ni=0.5,
+                      F=0.5,
+                      P=0.5,
+                      K=0.5,
+                      Cr=0.5,
+                      Ti=0.5,
+                      Mn=0.5,
+                      Co=0.5,
+                      Cu=0.5,
+                      Zn=0.5
+                     )
+    elif scaling_method=='jenkins09':
+        coef_z = dict(C=0.5, #Not adopted from Jenkins09
+                      N=0.5, #Not adopted from Jenkins09
+                      O=0.5, #Not adopted from Jenkins09
+                      Ne=0.5, #Not in Jenkins09
+                      Na=0.5, #Not in Jenkins09
+                      Mg=0.531,
+                      Al=0.5, #Not in Jenkins
+                      Si=0.305,
+                      S=0.290, #Synthetic Jenkins09
+                      Cl=0.609,
+                      Ar=0.5, #Not in Jenkins09
+                      Ca=0.5, #Not in Jenkins09
+                      Fe=0.437,
+                      Ni=0.599,
+                      F=0.5,
+                      P=0.5,
+                      K=0.5,
+                      Cr=0.5,
+                      Ti=0.5,
+                      Mn=0.5,
+                      Co=0.5,
+                      Cu=0.5,
+                      Zn=0.5
+                     )
     else:
         print('Depletion scaling method not supported!')
     return coef_z
