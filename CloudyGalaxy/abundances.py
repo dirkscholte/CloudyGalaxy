@@ -5,85 +5,16 @@ class ElementalAbundances:
     '''
     Calculates the abundance of elements.
     '''
-    def __init__(self, logZ, F):
+    def __init__(self, logZ, F, scaling_method='dopita13_scaled'):
         '''
         :param logZ: Log metallicity in units of solar metallicity
         :param F: depletion strength factor
         '''
         self.logZ = logZ
         self.F = F
-        self.coef_A = dict(C=-0.60,    # coefficient A for depletion fractions as in Byler et al. 2017
-                           N=-0.10,
-                           O=-0.14,
-                           Ne=-0.00,
-                           Na=-2.00,
-                           Mg=-2.16,
-                           Al=-2.78,
-                           Si=-1.62,
-                           S=-0.00,
-                           Cl=-2.00,
-                           Ar=-0.00,
-                           Ca=-5.04,
-                           Fe=-2.62,
-                           Ni=-4.00,
-                           F=0.0,
-                           P=0.0,
-                           K=0.0,
-                           Cr=0.0,
-                           Ti=0.0,
-                           Mn=0.0,
-                           Co=0.0,
-                           Cu=0.0,
-                           Zn=0.0
-                           )
-        self.coef_B = dict(C=-0.30,    #coefficient B for depletion fractions as in Byler et al. 2017
-                           N=-0.05,
-                           O=-0.07,
-                           Ne=-0.00,
-                           Na=-1.00,
-                           Mg=-1.08,
-                           Al=-1.39,
-                           Si=-0.81,
-                           S=-0.00,
-                           Cl=-1.00,
-                           Ar=-0.00,
-                           Ca=-2.52,
-                           Fe=-1.31,
-                           Ni=-2.00,
-                           F=0.0,
-                           P=0.0,
-                           K=0.0,
-                           Cr=0.0,
-                           Ti=0.0,
-                           Mn=0.0,
-                           Co=0.0,
-                           Cu=0.0,
-                           Zn=0.0
-                           )
-        self.coef_z = dict(C=0.5,    #coefficient z for depletion fractions as in Byler et al. 2017
-                           N=0.5,
-                           O=0.5,
-                           Ne=0.5,
-                           Na=0.5,
-                           Mg=0.5,
-                           Al=0.5,
-                           Si=0.5,
-                           S=0.5,
-                           Cl=0.5,
-                           Ar=0.5,
-                           Ca=0.5,
-                           Fe=0.5,
-                           Ni=0.5,
-                           F=0.5,
-                           P=0.5,
-                           K=0.5,
-                           Cr=0.5,
-                           Ti=0.5,
-                           Mn=0.5,
-                           Co=0.5,
-                           Cu=0.5,
-                           Zn=0.5
-                           )
+        self.coef_A = set_coef_A(scaling_method)
+        self.coef_B = set_coef_B(scaling_method)
+        self.coef_z = set_coef_z(scaling_method)
         self.solar = dict(He=-1.01,
                           C=-3.57,
                           N=-4.60,
@@ -225,3 +156,168 @@ def convert_xi_to_F(logZ):
         abundances.calc_all_parameters()
         xis[i] = abundances.dust_to_metal
     return InterpUS(xis, Fs, k=1)
+
+def set_coef_A(scaling_method):
+    if scaling_method=='dopita13_scaled':
+        coef_A = dict(C=-0.60,
+                      N=-0.10,
+                      O=-0.14,
+                      Ne=-0.00,
+                      Na=-2.00,
+                      Mg=-2.16,
+                      Al=-2.78,
+                      Si=-1.62,
+                      S=-0.00,
+                      Cl=-2.00,
+                      Ar=-0.00,
+                      Ca=-5.04,
+                      Fe=-2.62,
+                      Ni=-4.00,
+                      F=0.0,
+                      P=0.0,
+                      K=0.0,
+                      Cr=0.0,
+                      Ti=0.0,
+                      Mn=0.0,
+                      Co=0.0,
+                      Cu=0.0,
+                      Zn=0.0
+                      )
+    elif scaling_method='jenkins09':
+        coef_A = dict(C=-0.60, #Not adopted from Jenkins09
+                      N=-0.10, #Not adopted from Jenkins09
+                      O=-0.14, #Not adopted from Jenkins09
+                      Ne=-0.00, #Not in Jenkins09
+                      Na=-2.00, #Not in Jenkins09
+                      Mg=-0.997,
+                      Al=-2.78, #Not in Jenkins09
+                      Si=-1.136,
+                      S=-0.879, #Synthetic Jenkins09
+                      Cl=-1.242,
+                      Ar=-0.00, #Not in Jenkins09
+                      Ca=-5.04, #Not in Jenkins09
+                      Fe=-1.285,
+                      Ni=-1.490,
+                      F=0.0,
+                      P=0.0,
+                      K=0.0,
+                      Cr=0.0,
+                      Ti=0.0,
+                      Mn=0.0,
+                      Co=0.0,
+                      Cu=0.0,
+                      Zn=0.0
+                      )
+    else:
+        print('Depletion scaling method not supported!')
+    return coef_A
+
+def set_coef_B(scaling_method):
+    if scaling_method=='dopita13_scaled':
+        coef_B = dict(C=-0.30,
+                      N=-0.05,
+                      O=-0.07,
+                      Ne=-0.00,
+                      Na=-1.00,
+                      Mg=-1.08,
+                      Al=-1.39,
+                      Si=-0.81,
+                      S=-0.00,
+                      Cl=-1.00,
+                      Ar=-0.00,
+                      Ca=-2.52,
+                      Fe=-1.31,
+                      Ni=-2.00,
+                      F=0.0,
+                      P=0.0,
+                      K=0.0,
+                      Cr=0.0,
+                      Ti=0.0,
+                      Mn=0.0,
+                      Co=0.0,
+                      Cu=0.0,
+                      Zn=0.0
+                      )
+    elif scaling_method='jenkins09':
+        coef_B = dict(C=-0.30, #Not adopted from Jenkins09
+                      N=-0.05, #Not adopted from Jenkins09
+                      O=-0.07, #Not adopted from Jenkins09
+                      Ne=-0.00, #Not in Jenkins09
+                      Na=-1.00, #Not in Jenkins09
+                      Mg=-0.780, #Coefficient scaled to Grevesse10 abundances
+                      Al=-1.39, #Not in Jenkins09
+                      Si=-0.470, #Coefficient scaled to Grevesse10 abundances
+                      S=0.029,  #Synthetic Jenkins09
+                      Cl=-0.354, #Coefficient scaled to Grevesse10 abundances
+                      Ar=-0.00, #Not in Jenkins09
+                      Ca=-2.52, #Not in Jenkins09
+                      Fe=-1.473, #Coefficient scaled to Grevesse10 abundances
+                      Ni=-1.759, #Coefficient scaled to Grevesse10 abundances
+                      F=0.0,
+                      P=0.0,
+                      K=0.0,
+                      Cr=0.0,
+                      Ti=0.0,
+                      Mn=0.0,
+                      Co=0.0,
+                      Cu=0.0,
+                      Zn=0.0
+                      )
+    else:
+        print('Depletion scaling method not supported!')
+    return coef_B
+
+def set_coef_z(scaling_method):
+    if scaling_method=='dopita13_scaled':
+        self.coef_z = dict(C=0.5,
+                           N=0.5,
+                           O=0.5,
+                           Ne=0.5,
+                           Na=0.5,
+                           Mg=0.5,
+                           Al=0.5,
+                           Si=0.5,
+                           S=0.5,
+                           Cl=0.5,
+                           Ar=0.5,
+                           Ca=0.5,
+                           Fe=0.5,
+                           Ni=0.5,
+                           F=0.5,
+                           P=0.5,
+                           K=0.5,
+                           Cr=0.5,
+                           Ti=0.5,
+                           Mn=0.5,
+                           Co=0.5,
+                           Cu=0.5,
+                           Zn=0.5
+                           )
+    elif scaling_method='jenkins09':
+        self.coef_z = dict(C=0.5, #Not adopted from Jenkins09
+                           N=0.5, #Not adopted from Jenkins09
+                           O=0.5, #Not adopted from Jenkins09
+                           Ne=0.5, #Not in Jenkins09
+                           Na=0.5, #Not in Jenkins09
+                           Mg=0.531,
+                           Al=0.5, #Not in Jenkins
+                           Si=0.305,
+                           S=0.290, #Synthetic Jenkins09
+                           Cl=0.609,
+                           Ar=0.5, #Not in Jenkins09
+                           Ca=0.5, #Not in Jenkins09
+                           Fe=0.437,
+                           Ni=0.599,
+                           F=0.5,
+                           P=0.5,
+                           K=0.5,
+                           Cr=0.5,
+                           Ti=0.5,
+                           Mn=0.5,
+                           Co=0.5,
+                           Cu=0.5,
+                           Zn=0.5
+                           )
+    else:
+        print('Depletion scaling method not supported!')
+    return coef_z
