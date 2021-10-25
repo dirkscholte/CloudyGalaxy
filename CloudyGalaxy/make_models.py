@@ -11,15 +11,15 @@ output_dir          = './output_data/'
 model_name          = 'test_model'
 data_path           = './input_data/'
 star_table_filename = 'Chabrier_constant_SFH_IMF_lower_0p08_IMF_upper_120_star_table.ASCII'
-emission_line_list  = format_emission_table('./input_data/cloudyLines_2021-03-29.dat')
+emission_line_list  = format_emission_table('./input_data/LineList_HII.dat')
 
 nlogZs = 6
 nlogUs = 2
 nxis   = 2
 nlogtaus  = 4
 
-logZs = np.linspace(-1.0, 0.5, nlogZs)
-logUs = np.linspace(-3.5, -1.5, nlogUs)
+logZs = np.linspace(-1.0, 0.7, nlogZs)
+logUs = np.linspace(-4., -1., nlogUs)
 xis   = np.linspace(0.1, 0.6, nxis)
 logtaus  = np.linspace(-2.0, 0.6, nlogtaus)
 Fs    = np.ones((nlogZs,nxis))*np.nan
@@ -34,7 +34,6 @@ for i in range(nlogZs):
             xi = xis[k]
             F = xi_to_F(xi)
             Fs[i,k] = F
-            print(xi_to_F(xi))
             stellar_spectrum = StellarSpectrum(data_path, star_table_filename)
             gas_stats = GasStats(stellar_spectrum, logZ, logU)
             gas_stats.calc_all_parameters()
