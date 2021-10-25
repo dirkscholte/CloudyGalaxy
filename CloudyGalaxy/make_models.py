@@ -38,7 +38,7 @@ for i in range(nlogZs):
             stellar_spectrum = StellarSpectrum(data_path, star_table_filename)
             gas_stats = GasStats(stellar_spectrum, logZ, logU)
             gas_stats.calc_all_parameters()
-            elemental_abundances = ElementalAbundances(logZ, F)
+            elemental_abundances = ElementalAbundances(logZ, F, scaling_method='jenkins09')
             elemental_abundances.calc_all_parameters()
             make_input_file(output_dir, model_name, logZ, logU, xi, emission_line_list, stellar_spectrum, gas_stats, elemental_abundances)
 
