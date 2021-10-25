@@ -205,7 +205,7 @@ def make_unattenuated_emission_line_files(output_dir, model_name, logZs, logUs, 
 
     emline_param_cube = np.zeros((nlogZs,nlogUs,nxis, 3))
     emline_derived_param_cube = np.zeros((nlogZs,nlogUs,nxis, 2))
-    emline_luminosity_cube = np.zeros((nlogZs,nlogUs,nxis, 146))
+    emline_luminosity_cube = np.zeros((nlogZs,nlogUs,nxis, 73))
 
     for i in range(nlogZs):
         for j in range(nlogUs):
