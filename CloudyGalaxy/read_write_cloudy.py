@@ -152,7 +152,7 @@ def make_emission_line_files(output_dir, model_name, logZs, logUs, xis, logtaus,
 
     emline_param_cube = np.zeros((nlogZs,nlogUs,nxis,nlogtaus, 4))
     emline_derived_param_cube = np.zeros((nlogZs,nlogUs,nxis,nlogtaus, 4))
-    emline_luminosity_cube = np.zeros((nlogZs,nlogUs,nxis,nlogtaus, 146))
+    emline_luminosity_cube = np.zeros((nlogZs,nlogUs,nxis,nlogtaus, 73))
 
     for i in range(nlogZs):
         for j in range(nlogUs):
