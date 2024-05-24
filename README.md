@@ -1,6 +1,6 @@
 # CloudyGalaxy
 
-Code to run Cloudy 17.02 for conditions appropriate to galaxy H2 regions. 
+Code to run Cloudy 17.02 for conditions appropriate to galaxy HII regions. 
 
 - Uses FSPS irradiating spectra. (imported through StellarSpectrum class in read_write_cloudy.py)
 - Abundances as in Asplund et al. (2009) and Grevesse et al. (2010) (in abundances.py)
